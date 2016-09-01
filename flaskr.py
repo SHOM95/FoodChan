@@ -17,6 +17,51 @@ app = Flask(__name__)
 app.config.from_object(__name__)
 
 
+
+
+#checking error is None
+def render_redirect(template, url, error):
+    if error == None:
+        return redirect(url_for(url))
+    return render_template(template, error=error)
+
+# check user with login and register
+class User (object):
+
+    # you must put this!!
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
+
+    # check login session
+    def login (self, username, password):
+        error = None
+
+        u_name = g.db.execute(u"SELECT EXISTS ( SELECT username FROM accounts where username = ?)", (self.username, ) ).fetchone()    
+        if u_name[0] == 0:
+            error = "Your name is not exist!!"
+        else :
+            p_word = g.db.execute(u"SELECT EXISTS ( SELECT password FROM accounts where username = ?)", (self.username, ) ).fetchone()   
+            if p_word[0] == password :
+                error = "Your password is not correct!!"
+            else :
+                session['logged_in'] = True
+                your_name = g.db.execute('select username from accounts where password = ?',(request.form['password'],)).fetchone()
+                flash(your_name[0] + ' were logged in !!')
+        return error
+    # check new account
+    def signup(self, username, password):
+        error = None
+        u_name = g.db.execute(u'SELECT EXISTS (SELECT username FROM accounts WHERE username = ?)',(username,)).fetchone()
+        p_word = g.db.execute(u'SELECT EXISTS (SELECT password FROM accounts WHERE username = ?)',(password,)).fetchone()
+        if u_name[0] == 0 and p_word[0] == 0 :
+            flash('Account Created!!')
+            g.db.execute('insert into accounts (username, password) values (?, ?)', [username,password])
+            g.db.commit()
+        else :
+            error = 'Already Exist!!'
+        return error
+
 #DB connection function 
 def connect_db():
     return sqlite3.connect(app.config['DATABASE'])
@@ -66,20 +111,43 @@ def add_entry():
     flash('New entry was successfully posted')
     return redirect(url_for('show_entries'))
 
+#register part
+@app.route('/register', methods=['GET','POST'])
+def register():
+    error = None # error message
+    if session.get('logged_in'):
+        return redirect(url_for('show_entries'))
+    else :
+        if request.method == 'POST':
+            username = request.form['username']
+            password = request.form['password']
+
+            if "" in [username, password]:
+                error = 'You have empty field'
+            else :
+                user = User(username,password)
+                error = user.signup(username,password)
+            return render_redirect('register.html','show_entries',error)
+        else :
+            #error = 'One more time please!'
+            return render_template('register.html', error=error)
+
+
 #login part
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None    # error message
     if request.method == 'POST':
-        if request.form['username'] != app.config['USERNAME']:  # Username should be in DB
-            error = 'Invalid username'
-        elif request.form['password'] != app.config['PASSWORD']:    # Password should be in DB
-            error = 'Invalid password'
+        name = request.form['username']
+        pwss = request.form['password']
+        if "" in [name,pwss]:
+            error = "Empty Filed !!"
         else:
-            session['logged_in'] = True
-            flash('You were logged in')
-            return redirect(url_for('show_entries'))
-    return render_template('login.html', error=error)
+            user = User(name,pwss)
+            error = user.login(name,pwss)
+        return render_redirect('login.html','show_entries',error)
+    else :
+        return render_template('login.html', error=error)
 
 #logout part
 @app.route('/logout')
@@ -87,9 +155,6 @@ def logout():
     session.pop('logged_in', None)
     flash('You were logged out')
     return redirect(url_for('show_entries'))
-
-
-
 
 
 #run server
