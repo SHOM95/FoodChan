@@ -36,19 +36,18 @@ class User (object):
     # check login session
     def login (self, username, password):
         error = None
-
         u_name = g.db.execute(u"SELECT EXISTS ( SELECT username FROM accounts where username = ?)", (self.username, ) ).fetchone()    
         if u_name[0] == 0:
             error = "Your name is not exist!!"
         else :
-            p_word = g.db.execute(u"SELECT EXISTS ( SELECT password FROM accounts where username = ?)", (self.username, ) ).fetchone()   
-            if p_word[0] == password :
+            p_word = g.db.execute(u"SELECT password FROM accounts where username = ?", (self.username, ) ).fetchone()   
+            if p_word[0] != self.password :
                 error = "Your password is not correct!!"
             else :
                 session['logged_in'] = True
-                your_name = g.db.execute('select username from accounts where password = ?',(request.form['password'],)).fetchone()
-                flash(your_name[0] + ' were logged in !!')
+                flash( str(self.username) + ' were logged in !!')
         return error
+
     # check new account
     def signup(self, username, password):
         error = None
