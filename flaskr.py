@@ -23,7 +23,7 @@ app.config.from_object(__name__)
 def render_redirect(template, url, error):
     if error == None:
         return redirect(url_for(url))
-    return render_template(template, error=error)
+    return render_template(template, year='2016',error=error)
 
 # check user with login and register
 class User (object):
@@ -83,10 +83,6 @@ def teardown_request(exception):
     g.db.close()
 
 
-
-
-
-
 """
     from this, view part
 """
@@ -95,7 +91,7 @@ def teardown_request(exception):
 def show_entries():
     cur = g.db.execute('SELECT title, text FROM entries order by id desc')
     entries = [dict(title=row[0], text=row[1]) for row in cur.fetchall()]
-    return render_template('show_entries.html', entries=entries)
+    return render_template('show_entries.html', year='2016', entries=entries)
 
 
 #add new record
@@ -129,7 +125,7 @@ def register():
             return render_redirect('register.html','show_entries',error)
         else :
             #error = 'One more time please!'
-            return render_template('register.html', error=error)
+            return render_template('register.html', year='2016', error=error)
 
 
 #login part
@@ -146,7 +142,7 @@ def login():
             error = user.login(name,pwss)
         return render_redirect('login.html','show_entries',error)
     else :
-        return render_template('login.html', error=error)
+        return render_template('login.html', year='2016', error=error)
 
 #logout part
 @app.route('/logout')
