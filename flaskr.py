@@ -151,6 +151,13 @@ def logout():
     flash('You were logged out')
     return redirect(url_for('show_entries'))
 
+#temporary page
+@app.route('/testpage')
+def test_page():
+	return render_template('index.html')
+	
+	
+
 
 #run server
 if __name__ == '__main__':
