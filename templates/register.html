@@ -1,16 +1,22 @@
 {% extends "layout.html" %}
 
 {% block content %}
-
+  <!-- change new register design-->
+  <!-- all div tag classes' design control at bootstrap.css and so on -->
   <div class="container">
   <div class="row">
     <div class="col-md-6">
+          <!-- give error message when it has-->
           {% if error %}<p class="error"><strong>Error:</strong> {{ error }}{% endif %}
+          
+          <!--give data part-->
           <form class="form-horizontal" action="{{ url_for('register') }}" method="POST">
           <fieldset>
             <div id="legend">
               <legend class="">Register</legend>
             </div>
+
+            <!--input username part-->
             <div class="control-group">
               <label class="control-label" for="username">Username</label>
               <div class="controls">
@@ -18,7 +24,9 @@
                 <p class="help-block">Username can contain any letters or numbers, without spaces</p>
               </div>
             </div>
-             <!--
+            
+            <!-- input enmail part -->
+            <!--
             <div class="control-group">
               <label class="control-label" for="email">E-mail</label>
               <div class="controls">
@@ -26,7 +34,8 @@
                 <p class="help-block">Please provide your E-mail</p>
               </div>
             </div>-->
-         
+
+            <!-- input password part -->
             <div class="control-group">
               <label class="control-label" for="password">Password</label>
               <div class="controls">
@@ -34,6 +43,8 @@
                 <p class="help-block">Password should be at least 6 characters</p>
               </div>
             </div>
+
+            <!-- input same password when you inputted part -->
             <!--
             <div class="control-group">
               <label class="control-label" for="password_confirm">Password (Confirm)</label>
@@ -42,15 +53,18 @@
                 <p class="help-block">Please confirm password</p>
               </div>
             </div>-->
-         
+
+            <!--send user data-->
             <div class="control-group">
               <!-- Button -->
               <div class="controls">
                 <button class="btn btn-success">Register</button>
               </div>
             </div>
+            <!--/send user data end-->
+            
           </fieldset>
-        </form>
+        </form> <!--/give data part end-->
     
     </div> 
   </div>
