@@ -61,6 +61,9 @@ class User (object):
             error = 'Already Exist!!'
         return error
 
+
+
+
 #DB connection function 
 def connect_db():
     return sqlite3.connect(app.config['DATABASE'])
@@ -152,9 +155,21 @@ def logout():
     return redirect(url_for('show_entries'))
 
 #temporary page
-@app.route('/testpage')
+@app.route('/testpage', methods=['GET', 'POST'])
 def test_page():
-	return render_template('index.html')
+    error = None    # error message
+    print 'test';
+    if request.method == 'POST':
+        name = request.form['username']
+        pwss = request.form['password']
+        if "" in [name,pwss]:
+            error = "Empty Filed !!"
+        else:
+            user = User(name,pwss)
+            error = user.login(name,pwss)
+	    return render_redirect('index.html','show_entries.html',error)
+    else :
+        return render_template('index.html', year='2016', error=error)
 	
 	
 

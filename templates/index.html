@@ -77,15 +77,17 @@
 
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                        <ul class="nav navbar-nav navbar-right">
-                            <!-- This button is home key!-->
-                            <!--<li><a class="page-scroll" href="body">Home</a></li>-->
+                        <form action="{{ url_for('login') }}" method=post>
+                            <ul class="nav navbar-nav navbar-right">
+                                <!-- This button is home key!-->
+                                <!--<li><a class="page-scroll" href="body">Home</a></li>-->
 
-                            <!-- This part is login part-->
-                            <li><input type="text" placeholder="Email" class="form-control"></li>
-                            <li><input type="password" placeholder="Password" class="form-control"></li>
-                            <li><button type="submit" class="btn btn-success">Sign in</button></li>
-                        </ul>
+                                <!-- This part is login part-->
+                                <li><input type="text" placeholder="Email" name="username" class="form-control"></li>
+                                <li><input type="password" placeholder="Password" name="password" class="form-control"></li>
+                                <li><button type="submit" class="btn btn-success">Sign in</button></li>
+                            </ul>
+                        </form>
                     </div><!-- /.navbar-collapse -->
                   </div><!-- /.container -->
                 </nav>
@@ -108,19 +110,19 @@
 								<h1>We have Awesome things</h1>
 								<p>Let's make the web beautiful together</p>
                                 <div class="extra-space-l"></div>
-								<a class="btn btn-blank" href="https://creativemarket.com/Themetorium" target="_blank" role="button">Register!!</a>
+								<a class="btn btn-blank" href="{{ url_for('register') }}" target="_blank" role="button">Register!!</a>
 							</div>
 							<div class="item">
 								<h1>Join with us</h1>
 								<p>To the greatest Journey</p>
 								<div class="extra-space-l"></div>
-								<a class="btn btn-blank" href="https://creativemarket.com/Themetorium" target="_blank" role="button">Register!!</a>
+								<a class="btn btn-blank" href="{{ url_for('register') }}" target="_blank" role="button">Register!!</a>
 							</div>
 							<div class="item">
 								<h1>I'm Unika</h1>
 								<p>One Page Responsive Theme</p>
 								<div class="extra-space-l"></div>
-								<a class="btn btn-blank" href="https://creativemarket.com/Themetorium" target="_blank" role="button">Register!!</a>
+								<a class="btn btn-blank" href="{{ url_for('register') }}" target="_blank" role="button">Register!!</a>
 							</div>
 						</div>
 
