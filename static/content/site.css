@@ -45,3 +45,12 @@ input[type="checkbox"].input-validation-error {
 .flash          { background: #CEE5F5; padding: 0.5em;
                   border: 1px solid #AACBE2;
                   margin: 10px; }
+
+.col-md-6 {
+    padding-top: 20px;
+}
+
+.error {
+    background-color: aqua;
+    padding: 5px;
+}
