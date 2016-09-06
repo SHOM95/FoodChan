@@ -90,11 +90,10 @@ def teardown_request(exception):
     from this, view part
 """
 
-# Go homepage 
+# Go to homepage 
 @app.route('/', methods=['GET', 'POST'])
 def home ():
     error = None    # error message
-    #print 'test';
     if session.get('logged_in'):
         return redirect(url_for('show_entries'))
     else:
@@ -151,9 +150,9 @@ def register():
             #error = 'One more time please!'
             return render_template('register.html', year='2016', error=error)
 
-
-#login part
+# Erase Login part
 """
+#login part
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None    # error message
