@@ -146,6 +146,7 @@ section {
 .navbar .container {
 	padding-left: 50px;
 	padding-right: 50px;
+	padding-bottom: 10px;
 }
 
 
@@ -180,12 +181,16 @@ section {
 	background-image: url(../img/logo.png);
 }
 
+.navbar-default .navbar-collapse{
+	margin-bottom: -10px;
+}
+
 .navbar-nav > li {
 	margin-right: 10px;
 }
 
 .navbar-nav > li > input,button {
-	margin: 15px;
+	margin-top: 15px;
 }
 
 
@@ -1179,3 +1184,11 @@ p.subtitle {
 	transform: rotate(-45deg);
 }
 /* ===== End buttons ===== */
+
+/* flash part */
+.flash {
+	background: aqua;
+    padding: 11px;
+    margin-left: -15px;
+    margin-right: 8px;
+}

@@ -89,8 +89,29 @@ def teardown_request(exception):
 """
     from this, view part
 """
-#show DB
-@app.route('/')
+
+# Go homepage 
+@app.route('/', methods=['GET', 'POST'])
+def home ():
+    error = None    # error message
+    #print 'test';
+    if session.get('logged_in'):
+        return redirect(url_for('show_entries'))
+    else:
+        if request.method == 'POST':
+            name = request.form['username']
+            pwss = request.form['password']
+            if "" in [name,pwss]:
+                error = "Empty Filed !!"
+            else:
+                user = User(name,pwss)
+                error = user.login(name,pwss)
+            return render_redirect('index.html','show_entries',error)
+        else :
+            return render_template('index.html', year='2016', error=error)
+
+# show DB from entries
+@app.route('/board')
 def show_entries():
     cur = g.db.execute('SELECT title, text FROM entries order by id desc')
     entries = [dict(title=row[0], text=row[1]) for row in cur.fetchall()]
@@ -132,6 +153,7 @@ def register():
 
 
 #login part
+"""
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None    # error message
@@ -146,33 +168,14 @@ def login():
         return render_redirect('login.html','show_entries',error)
     else :
         return render_template('login.html', year='2016', error=error)
+"""
 
 #logout part
 @app.route('/logout')
 def logout():
     session.pop('logged_in', None)
     flash('You were logged out')
-    return redirect(url_for('show_entries'))
-
-#temporary page
-@app.route('/testpage', methods=['GET', 'POST'])
-def test_page():
-    error = None    # error message
-    print 'test';
-    if request.method == 'POST':
-        name = request.form['username']
-        pwss = request.form['password']
-        if "" in [name,pwss]:
-            error = "Empty Filed !!"
-        else:
-            user = User(name,pwss)
-            error = user.login(name,pwss)
-	    return render_redirect('index.html','show_entries.html',error)
-    else :
-        return render_template('index.html', year='2016', error=error)
-	
-	
-
+    return redirect(url_for('home'))
 
 #run server
 if __name__ == '__main__':

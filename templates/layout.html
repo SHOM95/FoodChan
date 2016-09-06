@@ -25,7 +25,7 @@
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url_for('show_entries') }}">Home</a></li>
                     {% if not session.logged_in %}
-                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                    <li><a href="{{ url_for('home') }}">Login</a></li>
                     <li><a href="{{ url_for('register') }}">Register</a></li>
                     {% else %}
                     <li><a href="{{ url_for('logout') }}">Logout</a></li>
