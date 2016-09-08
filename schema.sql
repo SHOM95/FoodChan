@@ -4,3 +4,10 @@ create table entries (
 	title string not null,
 	text string not null
 );
+
+CREATE TABLE accounts (
+	uid	INTEGER PRIMARY KEY AUTOINCREMENT,
+	username	TEXT,
+	password	TEXT,
+	email		TEXT,
+);
