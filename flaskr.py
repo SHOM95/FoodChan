@@ -49,13 +49,18 @@ class User (object):
         return error
 
     # check new account
-    def signup(self, username, password):
+    def signup(self, username, password, repass, email):
         error = None
-        u_name = g.db.execute(u'SELECT EXISTS (SELECT username FROM accounts WHERE username = ?)',(username,)).fetchone()
-        p_word = g.db.execute(u'SELECT EXISTS (SELECT password FROM accounts WHERE username = ?)',(password,)).fetchone()
-        if u_name[0] == 0 and p_word[0] == 0 :
+        u_name = g.db.execute(u'SELECT EXISTS (SELECT username FROM accounts WHERE username = ?)',(self.username,)).fetchone()
+        p_word = g.db.execute(u'SELECT EXISTS (SELECT password FROM accounts WHERE username = ?)',(self.username,)).fetchone()
+        e_mail = g.db.execute(u'SELECT EXISTS (SELECT email FROM accounts WHERE email = ?)',(email,)).fetchone()
+        if self.password != repass : 
+            error = 'your re-password is not correct!!'
+        elif e_mail[0] != 0:
+            error = 'your email is already exist!!'  
+        elif u_name[0] == 0 and p_word[0] == 0 :
             flash('Account Created!!')
-            g.db.execute('insert into accounts (username, password) values (?, ?)', [username,password])
+            g.db.execute('insert into accounts (username, password, email) values (?, ?, ?)', [username,password,email])
             g.db.commit()
         else :
             error = 'Already Exist!!'
@@ -139,12 +144,14 @@ def register():
         if request.method == 'POST':
             username = request.form['username']
             password = request.form['password']
+            repass = request.form['password_confirm']
+            email = request.form['email']
 
-            if "" in [username, password]:
+            if "" in [username, password,repass,email]:
                 error = 'You have empty field'
             else :
                 user = User(username,password)
-                error = user.signup(username,password)
+                error = user.signup(username,password,repass,email)
             return render_redirect('register.html','show_entries',error)
         else :
             #error = 'One more time please!'
