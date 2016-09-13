@@ -52,3 +52,5 @@
 - 2-2. flaskr.py 파일 :  하단 route 부분에서 등록 검증 추가
 - 3. schema.sql 파일 : text column 추가
 - 데이터 베이스 재생성 필요함( flaskr.db 부분 오류나면 sqlite browser로 수정부탁드림.)
+
+> readme 와 일정과 분리함 (9월 13일 오후 1시 38분)
