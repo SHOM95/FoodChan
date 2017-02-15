@@ -7,8 +7,11 @@
   <div class="row">
     <div class="col-md-6">
           <!-- give error message when it has-->
-          {% if error %}<p class="error"><strong>Error:</strong> {{ error }}{% endif %}
-          
+          {% if error %}
+          <div class="alert alert-success alert-dismissable">
+            <a href=""<a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+            <strong>Error:</strong> {{ error }}{% endif %}
+          </div>
           <!--give data part-->
           <form class="form-horizontal" action="{{ url_for('register') }}" method="POST">
           <fieldset>

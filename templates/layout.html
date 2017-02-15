@@ -37,7 +37,10 @@
 
     <div class="container body-content">
         {% for message in get_flashed_messages() %}
-            <div class=flash>{{ message }}</div>
+        <div class="alert alert-info alert-dismissable">
+            <a herf="#" class="close" data-dismiss="alert" aria-label="close">x</a>
+            {{ message }}
+        </div>
         {% endfor %}
         {% block content %}{% endblock %}
         <hr />
