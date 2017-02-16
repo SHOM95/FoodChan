@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block content %}
+  <br/>
+  {% if session.logged_in %}
+    {% for entry in entries %}
+    <table class="table">
+      <thead>
+        <tr>
+          <th> title : {{ entry.title }} </th>
+        </tr>
+        <tr>
+          <th> writer : {{ entry.writer }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>{{ entry.text | safe }}</th>
+        </tr>
+      </tbody>
+    </table>
+    {% endfor %}
+  {% else %}
+      <h4><em>You can't see this post!! you must login!!</em></h4>
+  {% endif %}
+  <hr />
+  <a href="{{ url_for('show_entries') }}"><h4> << back <h4> </a>
+  <br/>
+{% endblock %}

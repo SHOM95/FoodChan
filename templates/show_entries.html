@@ -11,11 +11,25 @@
       </dl>
     </form>
   {% endif %}
-  <ul class=entries>
-  {% for entry in entries %}
-    <li><h2>{{ entry.title }}</h2>{{ entry.text|safe }}
-  {% else %}
-    <li><em>Unbelievable.  No entries here so far</em>
-  {% endfor %}
-  </ul>
+  <hr />
+  <table class="table">
+    <thead>
+      <tr>
+        <th> No. </th>
+        <th> title </th>
+        <th> writer </th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for entry in entries %}
+      <tr>
+        <th>{{ entry.id }}</th>
+        <th><a href="{{ url_for('show_posts', title = entry.title ) }}">{{ entry.title }}</a></th>
+        <th>{{ entry.writer}}</th>
+      <tr>
+    {% else %}
+      <tr><em>Unbelievable.  No entries here so far</em></tr>
+    {% endfor %}
+    </tbody>
+  </table>
 {% endblock %}

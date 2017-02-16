@@ -37,13 +37,13 @@
 
     <div class="container body-content">
         {% for message in get_flashed_messages() %}
+        <br/>
         <div class="alert alert-info alert-dismissable">
             <a herf="#" class="close" data-dismiss="alert" aria-label="close">x</a>
             {{ message }}
         </div>
         {% endfor %}
         {% block content %}{% endblock %}
-        <hr />
         <footer>
             <p>&copy; {{ year }} - My Flask Application</p>
         </footer>
