@@ -6,14 +6,17 @@
   <div class="container">
   <div class="row">
     <div class="col-md-6">
+
+          <!--give data part-->
+          <form class="form-horizontal" action="{{ url_for('register') }}" method="POST">
           <!-- give error message when it has-->
           {% if error %}
           <div class="alert alert-success alert-dismissable">
             <a href=""<a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
-            <strong>Error:</strong> {{ error }}{% endif %}
+            <strong>Error:</strong> {{ error }}
           </div>
-          <!--give data part-->
-          <form class="form-horizontal" action="{{ url_for('register') }}" method="POST">
+          {% endif %}
+          
           <fieldset>
             <div id="legend">
               <legend class="">Register</legend>
