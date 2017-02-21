@@ -139,6 +139,11 @@ def add_entry():
 	if "" in [title_,text_] :
 		flash('Your post has empty space!! One more time!!')
 		return redirect(url_for('show_entries'))
+	# check post title has already exist
+	htitle = g.db.execute(u'SELECT EXISTS (SELECT title FROM entries WHERE title = ?)',(title_,)).fetchone()
+	if htitle[0] != 0:
+		flash('Your post title has already exist!! ')
+		return redirect(url_for('show_entries'))
 	# insert post
 	g.db.execute('INSERT INTO entries (title, text, writer) values (?, ?, ?)',
 			[ title_ , text_ ,session.get('username')])
