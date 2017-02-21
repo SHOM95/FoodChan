@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block content %} 
+  {% if session.logged_in %}
+  <h2><strong> 글쓰기 </strong></h2>
+    <form action="{{ url_for('add_entry') }}" method=post class=add-entry>
+      <tr>
+        <td><h4><strong>Title</strong></h4></td>
+        <td><input type=text size=98 maxlength="150" style="max-width: 1170px" name=title placeholder=" Input Title "></td>
+        <td><h4><strong>Text</strong></h4></td>
+        <td><textarea name=text rows=10 cols=100 maxlength="300" style="max-width: 1170px" placeholder=" Input text you want "></textarea></td>
+        <br/><br/>
+        <td><input type=submit value=등록하기></td>
+      </tr>
+    </form>
+  {% else %}
+    <h4><strong> You cannot write post Please Login !! </strong></h4>
+  {% endif %}
+  <hr/>
+  <a href="{{ url_for('show_entries') }}"><h4> << back <h4> </a>
+{% endblock %}

@@ -1,19 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
   <h2><strong> 게시판 </strong></h2>
-  {% if session.logged_in %}
-    <form action="{{ url_for('add_entry') }}" method=post class=add-entry>
-      <tr>
-        <td><h4><strong>Title</strong></h4></td>
-        <td><input type=text size=70 maxlength="150" style="max-width: 1170px" name=title placeholder=" Input Title "></td>
-        <td><h4><strong>Text</strong></h4></td>
-        <td><textarea name=text rows=10 cols=100 maxlength="300" style="max-width: 1170px" placeholder=" Input text you want "></textarea></td>
-        <br/><br/>
-        <td><input type=submit value=등록하기></td>
-      </tr>
-    </form>
-  {% endif %}
-  <hr />
   <table class="table">
     <thead>
       <tr>
@@ -34,4 +21,5 @@
     {% endfor %}
     </tbody>
   </table>
+  <button type="submit" value="write"><a href="{{ url_for('do_write') }}">작성하기</a></button>
 {% endblock %}

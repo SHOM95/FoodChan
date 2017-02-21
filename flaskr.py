@@ -120,6 +120,12 @@ def show_entries():
 	entries = [dict(id=row[0],title=row[1], writer=row[3]) for row in cur.fetchall()]
 	return render_template('show_entries.html', year='2017', entries=entries)
 
+@app.route('/write')
+def do_write():
+	if not session.get('logged_in'):
+		abort(401)
+	return render_template('write.html', year=2017)
+
 @app.route('/remove/<string:title>')
 def rm_entry(title):
 	g.db.execute('DELETE FROM entries where title = (?) ',[title])
@@ -138,12 +144,12 @@ def add_entry():
 	#check empty space
 	if "" in [title_,text_] :
 		flash('Your post has empty space!! One more time!!')
-		return redirect(url_for('show_entries'))
+		return render_template('write.html', year=2017)
 	# check post title has already exist
 	htitle = g.db.execute(u'SELECT EXISTS (SELECT title FROM entries WHERE title = ?)',(title_,)).fetchone()
 	if htitle[0] != 0:
-		flash('Your post title has already exist!! ')
-		return redirect(url_for('show_entries'))
+		flash('Error : Your post title has already exist!! ')
+		return render_template('write.html', year=2017)
 	# insert post
 	g.db.execute('INSERT INTO entries (title, text, writer) values (?, ?, ?)',
 			[ title_ , text_ ,session.get('username')])
