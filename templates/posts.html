@@ -1,28 +1,32 @@
 {% extends "layout.html" %}
 {% block content %}
+  <h2><strong> 게시글 </strong></h2>
   <br/>
   {% if session.logged_in %}
     {% for entry in entries %}
     <table class="table">
       <thead>
         <tr>
-          <th> title : {{ entry.title }} </th>
+          <th> Title | {{ entry.title }} </th>
         </tr>
         <tr>
-          <th> writer : {{ entry.writer }}</th>
+          <th> Writer | {{ entry.writer }}</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <th>{{ entry.text | safe }}</th>
+          <th> {{ entry.text | safe }} </th>
         </tr>
       </tbody>
     </table>
+    <form action="{{ url_for('rm_entry', title = entry.title) }}" class=remove-entry>
+      <button type="submit" value="remove">삭제하기</button>
+    </form>
+    <hr/>
     {% endfor %}
   {% else %}
-      <h4><em>You can't see this post!! you must login!!</em></h4>
+    <h4><em>You can't see this post!! you must login!!</em></h4>
   {% endif %}
-  <hr />
-  <a href="{{ url_for('show_entries') }}"><h4> << back <h4> </a>
-  <br/>
+<a href="{{ url_for('show_entries') }}"><h4> << back <h4> </a>
+<br/>
 {% endblock %}

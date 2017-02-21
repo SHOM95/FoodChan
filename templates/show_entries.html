@@ -1,23 +1,25 @@
 {% extends "layout.html" %}
 {% block content %}
+  <h2><strong> 게시판 </strong></h2>
   {% if session.logged_in %}
     <form action="{{ url_for('add_entry') }}" method=post class=add-entry>
-      <dl>
-        <dt>Title:
-        <dd><input type=text size=30 name=title>
-        <dt>Text:
-        <dd><textarea name=text rows=5 cols=40></textarea>
-        <dd><input type=submit value=Share>
-      </dl>
+      <tr>
+        <td><h4><strong>Title</strong></h4></td>
+        <td><input type=text size=70 maxlength="150" style="max-width: 1170px" name=title placeholder=" Input Title "></td>
+        <td><h4><strong>Text</strong></h4></td>
+        <td><textarea name=text rows=10 cols=100 maxlength="300" style="max-width: 1170px" placeholder=" Input text you want "></textarea></td>
+        <br/><br/>
+        <td><input type=submit value=등록하기></td>
+      </tr>
     </form>
   {% endif %}
   <hr />
   <table class="table">
     <thead>
       <tr>
-        <th> No. </th>
-        <th> title </th>
-        <th> writer </th>
+        <th><h4><strong> No. </strong></h4></th>
+        <th><h4><strong> Title </strong></h4></th>
+        <th><h4><strong> Writer </strong></h4></th>
       </tr>
     </thead>
     <tbody>
@@ -25,7 +27,7 @@
       <tr>
         <th>{{ entry.id }}</th>
         <th><a href="{{ url_for('show_posts', title = entry.title ) }}">{{ entry.title }}</a></th>
-        <th>{{ entry.writer}}</th>
+        <th>{{ entry.writer }}</th>
       <tr>
     {% else %}
       <tr><em>Unbelievable.  No entries here so far</em></tr>

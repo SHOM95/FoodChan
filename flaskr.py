@@ -116,10 +116,16 @@ def home ():
 # show DB from entries
 @app.route('/board')
 def show_entries():
-	cur = g.db.execute('SELECT * FROM entries order by id desc')
+	cur = g.db.execute('SELECT * FROM entries')
 	entries = [dict(id=row[0],title=row[1], writer=row[3]) for row in cur.fetchall()]
-	return render_template('show_entries.html', year='2016', entries=entries)
+	return render_template('show_entries.html', year='2017', entries=entries)
 
+@app.route('/remove/<string:title>')
+def rm_entry(title):
+	g.db.execute('DELETE FROM entries where title = (?) ',[title])
+	g.db.commit()
+	flash('Message : The post was deleted!! ')
+	return redirect(url_for('show_entries'))
 
 #add new record
 @app.route('/add', methods=['POST'])
@@ -127,8 +133,15 @@ def add_entry():
 	#exception
 	if not session.get('logged_in'):
 		abort(401)
+	title_ = request.form['title']
+	text_ = request.form['text']
+	#check empty space
+	if "" in [title_,text_] :
+		flash('Your post has empty space!! One more time!!')
+		return redirect(url_for('show_entries'))
+	# insert post
 	g.db.execute('INSERT INTO entries (title, text, writer) values (?, ?, ?)',
-			[request.form['title'], request.form['text'],session.get('username')])
+			[ title_ , text_ ,session.get('username')])
 	g.db.commit()
 	flash('New entry was successfully posted')
 	return redirect(url_for('show_entries'))
@@ -191,6 +204,6 @@ def logout():
 
 #run server
 if __name__ == '__main__':
-	app.run()
+	app.run(host='0.0.0.0', port = 1234)
 
 
